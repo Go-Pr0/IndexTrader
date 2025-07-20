@@ -1,0 +1,100 @@
+secretFiles:
+  - name: master-key
+    content: PLEASE_CHANGE_ME_IN_RENDER_UI
+
+services:
+  # Frontend Static Site
+  - type: web
+    name: frontend
+    env: static
+    staticPublishPath: ./frontend/out
+    buildCommand: |
+      cd frontend
+      npm install
+      npm run build
+    routes:
+      - type: rewrite
+        source: /.*
+        destination: /index.html
+
+  # Backend API Service
+  - type: web
+    name: backend-api
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /
+    secretFiles:
+      - name: master-key
+        mountPath: /etc/secrets/master-key
+    envVars:
+      - key: DATABASE_URL_USER
+        fromDatabase:
+          name: user-db
+          property: connectionString
+      - key: DATABASE_URL_GENERAL
+        fromDatabase:
+          name: general-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: redis
+          property: connectionString
+
+  # Backend Data Poller Worker
+  - type: worker
+    name: data-poller
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    command: celery -A app.workers.tasks worker -l info -Q data-tasks -n data-poller@%h
+    envVars:
+      - key: DATABASE_URL_USER
+        fromDatabase:
+          name: user-db
+          property: connectionString
+      - key: DATABASE_URL_GENERAL
+        fromDatabase:
+          name: general-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: redis
+          property: connectionString
+
+  # Backend Trading Engine Worker
+  - type: worker
+    name: trading-engine
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    command: celery -A app.workers.tasks worker -l info -Q trading-tasks -n trading-engine@%h
+    envVars:
+      - key: DATABASE_URL_USER
+        fromDatabase:
+          name: user-db
+          property: connectionString
+      - key: DATABASE_URL_GENERAL
+        fromDatabase:
+          name: general-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: redis
+          property: connectionString
+  
+  # Redis instance for caching and tasks
+  - type: redis
+    name: redis
+    ipAllowList: [] # Allow all
+
+databases:
+  - name: user-db
+    databaseName: userdb
+    user: btcuser
+  - name: general-db
+    databaseName: generaldb
+    user: btcuser 

@@ -1,0 +1,18 @@
+# Tech Stack
+
+This document outlines the technology stack for the Non-Custodial Index Trading Platform. The choices reflect a focus on performance, reliability, and developer experience, leveraging modern, well-supported frameworks and services.
+
+| Category                      | Technology                | Justification                                                                                                                                                             |
+| ----------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Frontend**                  | **Next.js (React)**       | A leading React framework for building fast, server-rendered applications. Its rich ecosystem and performance optimizations make it ideal for the user-facing dashboard.      |
+| **Frontend Styling**          | **Tailwind CSS**          | A utility-first CSS framework that enables rapid development of custom designs without leaving the HTML. It's highly configurable and aligns with a component-based architecture. |
+| **Backend Framework**         | **FastAPI (Python 3.11+)**| A high-performance Python framework for building APIs. Its asynchronous capabilities and Pydantic integration are perfect for a responsive and robust backend.             |
+| **Database**                  | **PostgreSQL**            | A powerful, open-source object-relational database system known for its reliability, feature robustness, and performance. Used for both user and general data stores.      |
+| **ORM**                       | **SQLAlchemy 2.0**        | The premier SQL toolkit and Object-Relational Mapper for Python, providing a secure and powerful abstraction layer for interacting with the PostgreSQL databases.             |
+| **Asynchronous Task Queue**   | **Celery & Redis**        | Celery is the industry standard for distributed task queues in Python. Paired with Redis as the message broker, it enables scalable, asynchronous execution of all long-running tasks like trade execution and data polling. |
+| **Authentication**            | **NextAuth.js**           | A complete open-source authentication solution for Next.js applications. It simplifies implementing OAuth with providers like Google, managing sessions, and securing pages.   |
+| **API Interaction**           | **Pybit & PyCoingecko**   | Using established client libraries for Bybit and CoinGecko APIs ensures reliable, maintainable, and standardized communication with these critical external services.           |
+| **Containerization**          | **Docker**                | The standard for creating, deploying, and running applications in isolated environments. It ensures consistency across development, testing, and production.                |
+| **Deployment & Infrastructure** | **Render.com**            | A unified cloud platform that simplifies deploying and managing the entire application stack, from static sites and web services to background workers and databases.         |
+| **Database Migrations**       | **Alembic**               | A lightweight database migration tool for SQLAlchemy. It allows for the systematic and version-controlled evolution of the database schemas.                               |
+| **Configuration Management**  | **Pydantic**              | Provides robust data validation and settings management. Used in the backend to manage configuration from environment variables, ensuring type safety and clarity.             | 

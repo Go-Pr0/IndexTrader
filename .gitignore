@@ -1,0 +1,18 @@
+# Node
+/frontend/node_modules
+/frontend/.next
+/frontend/out
+
+# Python
+/backend/__pycache__
+/backend/.venv
+/backend/venv
+*.pyc
+
+# IDE
+.idea
+.vscode
+
+# OS
+.DS_Store
+*.swo 

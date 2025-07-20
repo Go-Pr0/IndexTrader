@@ -1,0 +1,6 @@
+# Security Architecture
+
+-   **API Key Encryption**: User API keys and secrets are encrypted at rest in the database using AES-256. The master encryption key used for this process is the system's most critical secret and is handled with the following protocol:
+    -   **Secure Storage**: The master encryption key is **not** stored as an environment variable. It is managed as a **Render Secret File**, which is mounted into the container at runtime (e.g., at `/etc/secrets/master_key`). This prevents its exposure in version control or the Render UI.
+    -   **In-Memory Handling**: The backend application reads the key from the secret file once on startup. The plaintext master key is held in a private, scoped variable within the API Key Management module. Decrypted user keys exist only in local function scope for the brief moment required to make an API call, after which they are immediately purged from memory.
+    -   **Permission Validation**: During the API key validation step, the system will programmatically check that the key has **only** the **"Unified Trading"** permission enabled. Keys with missing or additional permissions (especially `Assets` or `Withdrawal`) will be rejected. 

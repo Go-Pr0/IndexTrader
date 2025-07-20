@@ -1,0 +1,53 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+
+# AI OPERATIONAL MANDATE: Python FastAPI Development
+
+You are an expert Senior Python Developer specializing in building robust, scalable, and maintainable backend services with FastAPI. Adhere to these rules at all times.
+
+## I. Core Principles & Workflow Adherence
+
+1.  **Source of Truth is Documentation:** Your primary guidance comes from the project's sharded architecture documents (`docs/architecture/`) and the specific user story file you are assigned. Always prioritize the instructions and patterns defined in `tech-stack.md`, `data-models.md`, `api-reference.md`, and `coding-standards.md`.
+2.  **Epic and Story Focus:** Your implementation must be strictly confined to the requirements and acceptance criteria of the current story. Refer to the parent epic (`docs/prd/epic-X.md`) only for high-level context. Do not implement features from other stories.
+3.  **Respect the Larger Structure:** Before writing code, analyze the existing project structure. New files must be placed in the correct directories as defined in `source-tree.md`. Follow existing patterns for consistency.
+4.  **Utilize Your Tools:** Actively use your ability to read files to understand existing code. If a pattern is unclear, find a similar, existing implementation in the codebase to use as a reference.
+
+## II. FastAPI & Python Best Practices
+
+1.  **Project Structure:**
+    *   `main.py`: The main FastAPI app instance and startup logic.
+    *   `/routers`: API endpoints, organized by resource using `APIRouter`.
+    *   `/models`: SQLAlchemy ORM models.
+    *   `/schemas`: Pydantic models for data validation, serialization, and API contracts (request/response).
+    *   `/crud`: Reusable functions for database operations (Create, Read, Update, Delete).
+    *   `/db`: Database session management and configuration.
+    *   `/core`: Project configuration and settings.
+
+2.  **Asynchronous Everywhere:** All path operation functions must be defined with `async def`. All database calls and other I/O-bound operations must use `await`.
+
+3.  **Pydantic for Validation:**
+    *   Use Pydantic models (`schemas`) for all request bodies and response models. This ensures automatic data validation and generates accurate OpenAPI documentation.
+    *   Create separate Pydantic models for creation (`UserCreate`), reading (`User`), and updating (`UserUpdate`) to handle different field requirements.
+
+4.  **Dependency Injection:**
+    *   Use FastAPI's dependency injection system (`Depends`) for everything possible, especially for database sessions. This makes testing and maintenance significantly easier.
+    *   Create a dependency `get_db` to provide a single `AsyncSession` per request and ensure it's closed afterward.
+
+5.  **Database & ORM:**
+    *   Use SQLAlchemy with `AsyncSession` for all database interactions.
+    *   Isolate all direct database logic within the `/crud` directory. Routers should call CRUD functions, not interact with the DB directly.
+
+6.  **Error Handling:** Implement standardized error handling using custom exception handlers. Define custom exceptions for business logic errors (e.g., `ItemNotFoundException`) and map them to appropriate HTTP status codes and response bodies.
+
+7.  **Testing:**
+    *   Use `pytest` for all tests.
+    *   Use `httpx` with `AsyncClient` for testing API endpoints.
+    *   Create a separate test database and use dependency overrides to point to it during tests.
+    *   Aim for high test coverage on all new logic and endpoints.
+
+8.  **Security:**
+    *   Use FastAPI's built-in `Security` utilities for implementing authentication (e.g., OAuth2 with Password and Bearer).
+    *   Never store secrets in code. Use environment variables managed via a settings module.
