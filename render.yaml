@@ -21,6 +21,8 @@ services:
     dockerContext: ./backend
     healthCheckPath: /
     envVars:
+      - key: CONTAINER_ROLE
+        value: api
       - key: DATABASE_URL_USER
         sync: false
       - key: DATABASE_URL_GENERAL
@@ -37,8 +39,9 @@ services:
     env: docker
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
-    startCommand: celery -A app.workers.tasks worker -l info -Q data-tasks -n data-poller@%h
     envVars:
+      - key: CONTAINER_ROLE
+        value: data-poller
       - key: DATABASE_URL_USER
         fromDatabase:
           name: user-db
@@ -59,8 +62,9 @@ services:
     env: docker
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
-    startCommand: celery -A app.workers.tasks worker -l info -Q trading-tasks -n trading-engine@%h
     envVars:
+      - key: CONTAINER_ROLE
+        value: trading-engine
       - key: DATABASE_URL_USER
         fromDatabase:
           name: user-db

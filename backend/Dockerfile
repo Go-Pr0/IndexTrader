@@ -26,5 +26,9 @@ ENV PYTHONPATH=/usr/local/lib/python3.11/site-packages
 # Copy the application code
 COPY ./app /app/app
 
+# Copy the entrypoint script
+COPY ./entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
 # Expose port and run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"] 
+ENTRYPOINT ["/app/entrypoint.sh"] 
