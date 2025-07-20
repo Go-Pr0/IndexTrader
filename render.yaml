@@ -20,18 +20,11 @@ services:
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     healthCheckPath: /
-    secretFiles:
-      - name: master-key
-        mountPath: /etc/secrets/master-key
     envVars:
       - key: DATABASE_URL_USER
-        fromDatabase:
-          name: user-db
-          property: connectionString
+        sync: false
       - key: DATABASE_URL_GENERAL
-        fromDatabase:
-          name: general-db
-          property: connectionString
+        sync: false
       - key: REDIS_URL
         fromService:
           type: redis
