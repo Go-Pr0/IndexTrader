@@ -1,3 +1,23 @@
+# IDE and environment specific
+.vscode/
+.idea/
+.cursor/
+.claude/
+.bmad-core/
+.gemini/
+.windsurf/
+.github/
+*_cache/
+backend/alembic/script.py.mako
+*.ini
+*.log
+*.log.*
+*.log.*.*
+*.log.*.*.*
+*.log.*.*.*.*
+*.log.*.*.*.*.*
+
+
 # Node
 /frontend/node_modules
 /frontend/.next
@@ -9,10 +29,6 @@
 /backend/venv
 *.pyc
 
-# IDE
-.idea
-.vscode
-
 # OS
 .DS_Store
 *.swo 
@@ -20,6 +36,7 @@
 .bmad-core 
 .claude
 .cursor
+.bmad-core
 .gemini
 .github
 .venv
