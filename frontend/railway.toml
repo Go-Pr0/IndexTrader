@@ -1,3 +1,4 @@
+# Force cache invalidation for Railway build
 [build]
 command = "npm install && npm run build"
 watchPatterns = ["/src", "/public", "package.json", "package-lock.json", "next.config.ts", "postcss.config.mjs", "tailwind.config.ts", "tsconfig.json"]
