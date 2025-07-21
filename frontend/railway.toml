@@ -1,0 +1,10 @@
+[build]
+command = "npm install && npm run build"
+watchPatterns = ["/src", "/public", "package.json", "package-lock.json", "next.config.ts", "postcss.config.mjs", "tailwind.config.ts", "tsconfig.json"]
+
+[deploy]
+startCommand = "npm start"
+healthcheckPath = "/"
+healthcheckTimeout = 100
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10 
