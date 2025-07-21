@@ -1,4 +1,4 @@
-# Force cache invalidation for Railway build
+# Force cache invalidation for Railway
 [build]
 command = "npm install && npm run build"
 watchPatterns = ["/src", "/public", "package.json", "package-lock.json", "next.config.ts", "postcss.config.mjs", "tailwind.config.ts", "tsconfig.json"]
@@ -8,4 +8,5 @@ startCommand = "npm start"
 healthcheckPath = "/"
 healthcheckTimeout = 100
 restartPolicyType = "on_failure"
-restartPolicyMaxRetries = 10 
+restartPolicyMaxRetries = 8
+#end toml
